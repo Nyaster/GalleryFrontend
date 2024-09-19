@@ -1,0 +1,35 @@
+<div class="container-fluid mt-5">
+  <h2>Image Gallery</h2>
+  <router-outlet></router-outlet>
+  <div class="row justify-content-center">
+    <div class="col-xs-auto">
+      @defer (when total > 2) {
+        <pagination
+          class="justify-content-center pagination-sm" [boundaryLinks]="true" [(ngModel)]="page" [maxSize]="5"
+          [totalItems]="total" [itemsPerPage]="pageSize"
+          (pageChanged)="changePage($event)" previousText="<" nextText=">" firstText="<<" lastText=">>"></pagination>
+      }
+
+    </div>
+
+  </div>
+  <div class="row">
+    <app-search [tagsFromAbove]="tags" (keydown.shift.enter)="searchButton()"
+                (tagsChange)="onTagsChange($event)"></app-search>
+  </div>
+  <br>
+  <ngx-masonry [options]="optionsMasonry" class="row">
+    @for (image of images; track image.id) {
+      <app-image-card [image]="image"></app-image-card>
+
+    }
+  </ngx-masonry>
+  <br>
+<div class="row">
+  @defer (when total > 2) {
+    <pagination
+      class="justify-content-center pagination-sm" [boundaryLinks]="true" [(ngModel)]="page" [maxSize]="5"
+      [totalItems]="total" [itemsPerPage]="pageSize" previousText="<" nextText=">" firstText="<<" lastText=">>"></pagination>
+  }
+</div>
+</div>

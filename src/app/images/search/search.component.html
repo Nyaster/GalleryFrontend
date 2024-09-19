@@ -1,0 +1,11 @@
+<tagify name="search" class="col-12 col-sm-10"
+        [(ngModel)]="tags"
+        inputClass="col-12 col-sm-10 form-control"
+        [settings]="settings"
+        [whitelist]="whitelist$"
+        [readonly]="readonly"
+        [disabled]="disabled"
+        (add)="onAdd($event)"
+        (tInput)="onInputSuggestion($event)"
+        (remove)="onRemove($event)"
+></tagify>

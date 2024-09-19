@@ -1,0 +1,7 @@
+.hover-text-card {
+  display: none;
+}
+.card>a:hover>.hover-text-card{
+  display: block;
+  background-color: rgba(4,4,19,0.7);
+}
