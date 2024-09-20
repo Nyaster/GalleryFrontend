@@ -27,11 +27,18 @@ jobs:
     - name: Copy files via SSH
       env:
         SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
-        SSH_PASSPHRASE: ${{ secrets.DEPLOY_PASS }}
+        SSH_PASSPHRASE: ${{ secrets.DEPLOY_PASS }}  # Add this if you use a passphrase
       run: |
         mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         eval "$(ssh-agent -s)"  # Start ssh-agent
-        ssh-add <(echo "$SSH_PRIVATE_KEY" | ssh-keygen -y -P "$SSH_PASSPHRASE")  # Add key to ssh-agent
-        rsync -avz --delete ./dist/lil-gallery-frontend/browser/ nyaster@82.153.138.253:/var/www/new.nyaster.com
+    
+        # Add the key to ssh-agent
+        if [ -n "$SSH_PASSPHRASE" ]; then
+          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
+        else
+          ssh-add ~/.ssh/id_rsa
+        fi
+    
+        rsync -avz --delete ./dist/lil-gallery-frontend/browser/ Nyaster@82.153.138.253:/var/www/new.nyaster.com
