@@ -1,5 +1,5 @@
 # Step 1: Build the Angular app
-FROM node:16-alpine AS build
+FROM node AS build
 
 WORKDIR /app
 
