@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "@yaireo/tagify": "^4.31.3",
     "bootstrap": "^5.3.3",
     "masonry-layout": "^4.2.2",
     "ngx-bootstrap": "^18.0.2",
