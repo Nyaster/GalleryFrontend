@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build --prod
 
 # Step 2: Create a lightweight Nginx server for the production build
-FROM nginx:alpine
+FROM nginx
 
 COPY --from=build /app/dist/lil-gallery-frontend /usr/share/nginx/html
 
