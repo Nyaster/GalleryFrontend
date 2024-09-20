@@ -30,15 +30,15 @@ jobs:
         SSH_PASSPHRASE: ${{ secrets.DEPLOY_PASS }}  # Add this if you use a passphrase
       run: |
         mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
         eval "$(ssh-agent -s)"  # Start ssh-agent
     
         # Add the key to ssh-agent
         if [ -n "$SSH_PASSPHRASE" ]; then
-          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
+          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_ed25519
         else
-          ssh-add ~/.ssh/id_rsa
+          ssh-add ~/.ssh/id_ed25519
         fi
     
         rsync -avz --delete ./dist/lil-gallery-frontend/browser/ Nyaster@82.153.138.253:/var/www/new.nyaster.com
