@@ -40,5 +40,7 @@ jobs:
         else
           ssh-add ~/.ssh/id_ed25519
         fi
+        
+        ssh-keyscan -H 82.153.138.253 >> ~/.ssh/known_hosts
     
         rsync -avz --delete ./dist/lil-gallery-frontend/browser/ Nyaster@82.153.138.253:/var/www/new.nyaster.com
