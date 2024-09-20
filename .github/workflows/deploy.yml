@@ -1,0 +1,37 @@
+name: Deploy Angular App
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '22'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build Angular App
+      run: npm run build --prod
+
+    - name: Copy files via SSH
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+        SSH_PASSPHRASE: ${{ secrets.DEPLOY_PASS }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        eval "$(ssh-agent -s)"  # Start ssh-agent
+        ssh-add <(echo "$SSH_PRIVATE_KEY" | ssh-keygen -y -P "$SSH_PASSPHRASE")  # Add key to ssh-agent
+        rsync -avz --delete ./dist/lil-gallery-frontend/browser/ nyaster@82.153.138.253:/var/www/new.nyaster.com
