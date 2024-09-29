@@ -25,7 +25,7 @@ interface PageableImageDto {
   providedIn: 'root'
 })
 export class ImageService {
-  private apiImagesEndpoint: string = "http://localhost:5100/api/images/search"
+  private apiImagesEndpoint: string;
   private images: AppImageDto[] = [];
 
   constructor(private http: HttpClient, private config: ConfigurationService) {

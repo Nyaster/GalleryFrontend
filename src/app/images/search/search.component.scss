@@ -1,15 +1,29 @@
 .tagify {
   --tag-pad: 0 0.5rem;
   line-height: 1.5;
+  box-sizing: border-box;
 }
 
 
 .tagify__input:empty::before {
-  line-height: inherit;
+  line-height: var(--bs-body-line-height);
 }
-
+.tagify__input{
+  line-height: var(--bs-body-line-height);
+}
+.tagify__tag{
+  line-height: var(--bs-body-line-height);
+}
 
 .tagify.form-control {
   height: unset;
+
+}
+.search{
+  border-radius: var(--border-radius);
+  padding:  var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+}
+.block{
+  display: block;
 }
 

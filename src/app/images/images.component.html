@@ -13,14 +13,14 @@
     </div>
 
   </div>
-  <div class="row">
-    <app-search [tagsFromAbove]="tags" (keydown.shift.enter)="searchButton()"
+
+    <app-search (search)="searchButton()" class="row" [tagsFromAbove]="tags" (keydown.shift.enter)="searchButton()"
                 (tagsChange)="onTagsChange($event)"></app-search>
-  </div>
+
   <br>
-  <ngx-masonry [options]="optionsMasonry" class="row">
+  <ngx-masonry [options]="optionsMasonry" [ordered]="true" class="row">
     @for (image of images; track image.id) {
-      <app-image-card [image]="image"></app-image-card>
+      <app-image-card [image]="image" ></app-image-card>
 
     }
   </ngx-masonry>
