@@ -109,8 +109,8 @@ export class AuthService {
   isAdmin(): boolean {
     console.log(this.role)
     const type = typeof this.role;
-    return type === "string" ? this.role === 'Admin' :
-      (this.role as string[]).find(x => x === 'Admin') === 'Admin';
+    return (type === "string") ? this?.role === 'Admin' :
+      (this.role as string[])?.find(x => x === 'Admin') === 'Admin';
   }
 
   get AuthToken(): string | null {
