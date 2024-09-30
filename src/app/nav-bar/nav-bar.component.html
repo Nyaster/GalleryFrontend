@@ -22,7 +22,7 @@
         </ul>
       } @else {
         <ul class="navbar-nav justify-content-center col-12 col-md-auto">
-          @if (this.isAdmin){
+          @if (this.authService.isAdmin()){
             <li class="nav-item me-md-2"><a routerLink="/admin" class="btn col-12  btn-outline-light">Profile</a></li>
           }
           <li class="nav-item me-md-2"><a routerLink="/profile" class="btn col-12  btn-outline-light">Profile</a></li>

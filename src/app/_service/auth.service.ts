@@ -18,7 +18,7 @@ export class AuthService {
   private apiUrl = "http://localhost:5100";
   private _isLoggedIn = false;
   private token: string | null = null;
-  private role: string[] | null = null;
+  private role: string[] | string | null = null;
 
   constructor(private http: HttpClient, private router: Router, private configuration: ConfigurationService) {
     this.apiUrl = configuration.apiUrl;
@@ -108,7 +108,10 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    return this.role?.find(x => x === 'Admin') === 'Admin';
+    console.log(this.role)
+    const type = typeof this.role;
+    return type === "string" ? this.role === 'Admin' :
+      (this.role as string[]).find(x => x === 'Admin') === 'Admin';
   }
 
   get AuthToken(): string | null {
