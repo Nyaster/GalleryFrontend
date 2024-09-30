@@ -105,7 +105,7 @@ export class ImagesComponent implements OnInit {
           this.total = (this.page * this.pageSize) < this.total ? this.total : this.page * this.pageSize;
           this.onImageLoad();
         },
-        error: (x) => console.log(x),
+        error: (x) => x,
       }
     );
   }
@@ -119,7 +119,7 @@ export class ImagesComponent implements OnInit {
     this.loadImages();
 
   }
-
+  @HostListener('window:keyup.shift.arrowLeft', ['$event'])
   onImageLoad(): void {
     if (this.masonry) {
       this.masonry.reloadItems();

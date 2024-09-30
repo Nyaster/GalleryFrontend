@@ -1,9 +1,9 @@
-import {Component, Input} from '@angular/core';
-import {NgOptimizedImage} from "@angular/common";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {AsyncPipe, NgOptimizedImage} from "@angular/common";
 import {NgxMasonryModule} from "ngx-masonry";
 import {RouterLink} from "@angular/router";
 import {ConfigurationService} from "../../configuration.service";
-import {config} from "rxjs";
+import {AuthImagePipe} from "../../auth-image.pipe";
 
 @Component({
   selector: 'app-image-card',
@@ -11,13 +11,16 @@ import {config} from "rxjs";
   imports: [
     NgOptimizedImage,
     NgxMasonryModule,
-    RouterLink
+    RouterLink,
+    AuthImagePipe,
+    AsyncPipe
   ],
   templateUrl: './image-card.component.html',
   styleUrl: './image-card.component.scss'
 })
 export class ImageCardComponent {
   @Input() image: any;
+  @Output() imageLoaded = new EventEmitter();
 
   constructor(protected config: ConfigurationService) {
   }

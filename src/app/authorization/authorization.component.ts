@@ -4,12 +4,13 @@ import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LoginModel} from "../_interfaces/login.model";
 import {ActivatedRoute, Router} from "@angular/router";
 
+
 @Component({
   selector: 'app-authorization',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './authorization.component.html',
   styleUrl: './authorization.component.scss'
@@ -18,6 +19,7 @@ export class AuthorizationComponent {
   login = new FormControl('');
   password = new FormControl('');
   submitButtonText: string = "";
+  errorMessage: any;
 
   constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {
     activatedRoute.url.subscribe(x => {
@@ -28,14 +30,19 @@ export class AuthorizationComponent {
 
   authorization() {
     var loginModel = new LoginModel(this.login.getRawValue()!, this.password.getRawValue()!);
-    this.submitButtonText === "login" ? this.authService.login(loginModel).subscribe(response => {
-      console.log(`Logged in ${response}`);
-      this.router.navigate(['/']);
-    }) : this.authService.register(loginModel).subscribe(response => {
-      console.log(`registered in ${response}`);
-      this.router.navigate(['/']);
-    })
-    ;
-
+    if (this.submitButtonText === "login"){
+      this.authService.login(loginModel).subscribe({
+        next: (x)=>{
+          console.log("test");
+          this.errorMessage = null;
+          this.router.navigate(['/images']);
+        },
+        error: (err)=>{
+          console.error("Login error:", err);
+          // You can display an error message in the UI
+          this.errorMessage = "Something went wrong. Please check your credentials and try again.";
+        }
+      })
+    }
   }
 }

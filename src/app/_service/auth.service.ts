@@ -1,10 +1,11 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {LoginModel} from "../_interfaces/login.model";
 import {Authorization} from "../_interfaces/Authorization.model";
-import {catchError, map, tap} from "rxjs";
+import {catchError, map, tap, throwError} from "rxjs";
 import {Router} from "@angular/router";
 import {ConfigurationService} from "../configuration.service";
+import * as jwt_decode from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,20 @@ export class AuthService {
 
   private apiUrl = "http://localhost:5100";
   private _isLoggedIn = false;
+  private token: string | null = null;
+  private role: string[] | null = null;
 
   constructor(private http: HttpClient, private router: Router, private configuration: ConfigurationService) {
     this.apiUrl = configuration.apiUrl;
+    this.loadTokenFromStorage();
+  }
+
+  private loadTokenFromStorage() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.token = token;
+      this.decodeToken();
+    }
   }
 
   login(login: LoginModel) {
@@ -26,9 +38,11 @@ export class AuthService {
       .pipe(tap((response) => {
         this.setTokens(response.token, response.refreshToken);
         this.isLoggedIn = true;
-      }), catchError(err => {
-        console.log(err);
-        return []
+        this.loadTokenFromStorage();
+      }), catchError((error: HttpErrorResponse) => {
+        // Handle the error and rethrow it
+        console.error("Login failed in authService:", error);
+        return throwError(() => error); // Rethrow the error to be caught by the calling code
       }));
   }
 
@@ -37,10 +51,20 @@ export class AuthService {
       .pipe(tap((response) => {
         this.setTokens(response.token, response.refreshToken);
         this.isLoggedIn = true;
+        this.loadTokenFromStorage();
       }), catchError(err => {
-        console.log(err);
         return []
       }));
+  }
+
+  private decodeToken() {
+    if (this.token) {
+      // @ts-ignore
+      const decodedToken = jwt_decode.jwtDecode(this.token);
+      const jsonToken = JSON.parse(JSON.stringify(decodedToken));
+      const temp: any = jsonToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+      this.role = temp;
+    }
   }
 
   private setTokens(accessToken: string, refreshToken: string) {
@@ -81,6 +105,10 @@ export class AuthService {
       this.isLoggedIn = true;
     }
     return this._isLoggedIn;
+  }
+
+  isAdmin(): boolean {
+    return this.role?.find(x => x === 'Admin') === 'Admin';
   }
 
   get AuthToken(): string | null {

@@ -1,14 +1,18 @@
 <div class="bottom-0 end-0 mb-3 me-3">
   <main class="form-signin w-100 m-auto">
     <form (ngSubmit)="authorization()">
-      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+      <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
       <div class="form-floating">
         <input type="text" class="form-control" id="LoginInput" [formControl]="login">
         <label for="LoginInput">Login</label>
       </div>
       <div class="form-floating">
+
         <input type="password" class="form-control" id="PasswordInput" [formControl]="password">
         <label for="PasswordInput">Password</label>
+        @if (errorMessage) {
+          <p>Wrong password or login, please try again</p>
+        }
       </div>
       <button class="btn btn-primary w-100 py-2" type="submit" [textContent]="submitButtonText"></button>
     </form>

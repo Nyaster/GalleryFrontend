@@ -4,6 +4,9 @@ import {AuthorizationComponent} from "./authorization/authorization.component";
 import {HomeComponent} from "./home/home.component";
 import {ImagesComponent} from "./images/images.component";
 import {ImagePageComponent} from "./images/image-page/image-page.component";
+import {ProfileComponent} from "./profile/profile.component";
+import {AdminComponent} from "./admin/admin/admin.component";
+import {AdminGuardService} from "./_service/admin-guard.service";
 
 export const routes: Routes = [
   {path: "login", component: AuthorizationComponent}, {
@@ -15,6 +18,9 @@ export const routes: Routes = [
   {path: "images/:id", component: ImagePageComponent},
   {
     path: "home", component: HomeComponent,
+  }, {
+    path: "admin", component: AdminComponent, canActivate: [AuthGuardService, AdminGuardService]
   },
+  {path: "profile", component: ProfileComponent},
   {path: "", redirectTo: "home", pathMatch: "full"}
 ];
