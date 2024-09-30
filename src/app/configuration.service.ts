@@ -8,5 +8,5 @@ export class ConfigurationService {
   constructor() {
   }
 
-  public apiUrl: string = "http://localhost:8080";
+  public apiUrl: string = "";
 }
