@@ -30,19 +30,26 @@ export class AuthorizationComponent {
 
   authorization() {
     var loginModel = new LoginModel(this.login.getRawValue()!, this.password.getRawValue()!);
-    if (this.submitButtonText === "login"){
+    if (this.submitButtonText === "login") {
       this.authService.login(loginModel).subscribe({
-        next: (x)=>{
-          console.log("test");
+        next: (x) => {
           this.errorMessage = null;
           this.router.navigate(['/images']);
         },
-        error: (err)=>{
-          console.error("Login error:", err);
-          // You can display an error message in the UI
+        error: (err) => {
           this.errorMessage = "Something went wrong. Please check your credentials and try again.";
         }
       })
+    } else if (this.submitButtonText === "registration") {
+      this.authService.register(loginModel).subscribe({
+        next: (x) => {
+          this.errorMessage = null;
+          this.router.navigate(['/images']);
+        },
+        error: (err) => {
+          this.errorMessage = "Something went wrong. Please check your credentials and try again.";
+        }
+      });
     }
   }
 }
