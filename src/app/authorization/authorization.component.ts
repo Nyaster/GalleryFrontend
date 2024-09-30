@@ -40,7 +40,7 @@ export class AuthorizationComponent {
           this.errorMessage = "Something went wrong. Please check your credentials and try again.";
         }
       })
-    } else if (this.submitButtonText === "registration") {
+    } else if (this.submitButtonText === "register") {
       this.authService.register(loginModel).subscribe({
         next: (x) => {
           this.errorMessage = null;
