@@ -59,7 +59,6 @@ export class AuthService {
 
   private decodeToken() {
     if (this.token) {
-      // @ts-ignore
       const decodedToken = jwt_decode.jwtDecode(this.token);
       const jsonToken = JSON.parse(JSON.stringify(decodedToken));
       const temp: any = jsonToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
