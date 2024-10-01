@@ -2,12 +2,12 @@ import {Injectable} from '@angular/core';
 import {
   HttpErrorResponse,
   HttpEvent,
-  HttpHandler, HttpHeaders,
+  HttpHandler,
   HttpInterceptor,
-  HttpRequest,
-  HttpResponse
+  HttpRequest
 } from '@angular/common/http';
-import {catchError, Observable, switchMap, tap, throwError} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
+import {catchError, switchMap} from 'rxjs/operators';
 import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 
@@ -20,7 +20,11 @@ export class AuthInterceptorService implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const accessToken = this.authService.AuthToken; // Обновлённая ссылка
+    return this.handleRequest(req, next);
+  }
+
+  private handleRequest(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const accessToken = this.authService.AuthToken;
     if (accessToken) {
       req = req.clone({
         setHeaders: {
@@ -30,32 +34,33 @@ export class AuthInterceptorService implements HttpInterceptor {
     }
 
     return next.handle(req).pipe(
-      tap({
-        error: (error) => {
-          const header: Headers = error.headers;
-          if (header.get("Token-expired") === "true") {
-            return this.authService.refresh().pipe(
-              switchMap((refreshResponse) => {
-                // Обновляем токен в заголовках
-                const newToken = refreshResponse.token;
-                req = req.clone({
-                  setHeaders: {
-                    Authorization: `Bearer ${newToken}`
-                  }
-                });
-
-                return next.handle(req);
-              }),
-              catchError((refreshError) => {
-                // Обработка ошибок при обновлении токена (например, выход пользователя)
-                return throwError(refreshError);
-              })
-            );
-          }
-
-          // Если токен не истек, просто выбрасываем ошибку
-          return throwError(error);
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401 && error.headers.get('token-expired') === 'true') {
+          return this.handleTokenRefresh(req, next);
         }
+        return throwError(() => error);
+      })
+    );
+  }
+
+  private handleTokenRefresh(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return this.authService.refresh().pipe(
+      switchMap(refreshResponse => {
+        const newToken = refreshResponse.token;// Assuming you have a method to update the token
+
+        const newReq = req.clone({
+          setHeaders: {
+            Authorization: `Bearer ${newToken}`
+          }
+        });
+
+        return this.handleRequest(newReq, next);
+      }),
+      catchError(refreshError => {
+        // Handle refresh failure (e.g., logout user, redirect to login)
+        this.authService.logout();
+        this.router.navigate(['/login']);
+        return throwError(() => refreshError);
       })
     );
   }
