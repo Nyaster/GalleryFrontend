@@ -1,5 +1,4 @@
-<header class="navbar text-center p-3 navbar border-bottom border-body" data-bs-theme="dark"
-        style="background-color: var(--bs-indigo) !important;">
+<header class="navbar text-center p-3 navbar border-bottom border-body bg-body-tertiary">
   <div class="container-fluid navbar-expand-md">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <a routerLink="/" class="navbar-brand">Lil Gallery</a>
@@ -21,13 +20,13 @@
           </li>
         </ul>
       } @else {
-        <ul class="navbar-nav justify-content-center col-12 col-md-auto">
+        <menu class="navbar-nav justify-content-center col-12 col-md-auto">
           @if (this.authService.isAdmin()){
-            <li class="nav-item me-md-2"><a routerLink="/admin" class="btn col-12  btn-outline-light">Profile</a></li>
+            <li class="nav-item me-md-2"><a routerLink="/admin" class="btn col-12  btn-outline-light">Admin</a></li>
           }
           <li class="nav-item me-md-2"><a routerLink="/profile" class="btn col-12  btn-outline-light">Profile</a></li>
           <li class="nav-item me-md-2"><a (click)="logout()" class="btn col-12  btn-outline-light">Log out</a></li>
-        </ul>
+        </menu>
       }
 
 

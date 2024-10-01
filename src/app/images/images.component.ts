@@ -38,16 +38,6 @@ export class ImagesComponent implements OnInit {
   tags: string[] = [];// Add tags for filtering, e.g., ['nature', 'animals']
   total: number = 0
   optionsMasonry: NgxMasonryOptions = {
-    animations: {
-      show: [
-        style({opacity: 0}),
-        animate('400ms ease-in', style({opacity: 1})),
-      ],
-      hide: [
-        style({opacity: '*'}),
-        animate('400ms ease-in', style({opacity: 0})),
-      ]
-    }
 
   }
   // @ts-ignore
