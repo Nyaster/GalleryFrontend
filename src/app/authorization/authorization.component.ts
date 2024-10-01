@@ -44,10 +44,14 @@ export class AuthorizationComponent {
       this.authService.register(loginModel).subscribe({
         next: (x) => {
           this.errorMessage = null;
-          this.router.navigate(['/images']);
+          this.router.navigate(['/login']);
         },
         error: (err) => {
           this.errorMessage = "Something went wrong. Please check your credentials and try again.";
+        },
+        complete:()=>{
+          this.errorMessage = null;
+          this.router.navigate(['/login']);
         }
       });
     }
