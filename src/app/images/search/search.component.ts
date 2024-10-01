@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, input, OnInit, Output, ViewChild} from '@angular/core';
-import {TagData, TagifyComponent, TagifyModule, TagifyService, TagifySettings} from "ngx-tagify";
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {TagData, TagifyModule, TagifyService, TagifySettings} from "ngx-tagify";
 import {BehaviorSubject, debounceTime, distinctUntilChanged, Subject} from "rxjs";
 import {FormsModule} from "@angular/forms";
-import {query} from "@angular/animations";
 import {HttpClient} from "@angular/common/http";
 import {AsyncPipe} from "@angular/common";
+import {environment} from "../../../environments/environment";
 
 interface Tag {
   name: string;
@@ -19,7 +19,8 @@ interface Tag {
     AsyncPipe
   ],
   templateUrl: './search.component.html',
-  styleUrl: './search.component.scss'
+  styleUrl: './search.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class SearchComponent implements OnInit {
   constructor(private http: HttpClient, private tagifyService: TagifyService) {
@@ -40,7 +41,7 @@ export class SearchComponent implements OnInit {
 
   @Input() tagsFromAbove!: string[];
   @Output() tagsChange = new EventEmitter<string[]>();
-
+  @Output() search = new EventEmitter<boolean>();
 
   tags: TagData[] = [];
   // tags = 'foo'; -> if you want to pass as string
@@ -94,13 +95,17 @@ export class SearchComponent implements OnInit {
 
   }
 
+  onSearch() {
+    this.search.emit(true);
+  }
+
   onInputSuggestion($event: string): void {
     if (!$event || $event.length === 0) return;
     this.searchSubject.next($event);
   }
 
   getTagsSuggestion($event: string) {
-    this.http.get<Tag[]>(`http://localhost:5100/api/tags/suggestions?tag=${$event}`)
+    this.http.get<Tag[]>(environment.apiUrl + `/api/tags/suggestions?tag=${$event}`)
       .subscribe(suggestions => {
         this.whitelist$.next(suggestions.map(x => x.name));
         this.tagifyService.get("search").dropdown.show();

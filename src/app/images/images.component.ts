@@ -48,16 +48,17 @@ export class ImagesComponent implements OnInit {
         animate('400ms ease-in', style({opacity: 0})),
       ]
     }
+
   }
   // @ts-ignore
   private url;
 
-  @HostListener('window:keyup.shift.arrowRight', ['$event'])
+  @HostListener('window:keyup.control.arrowRight', ['$event'])
   keyboarderEvent(event: KeyboardEvent) {
     this.nextPage();
   }
 
-  @HostListener('window:keyup.shift.arrowLeft', ['$event'])
+  @HostListener('window:keyup.control.arrowLeft', ['$event'])
   keyboarderEvent1(event: KeyboardEvent) {
     this.prevPage();
   }
@@ -72,7 +73,7 @@ export class ImagesComponent implements OnInit {
       if (params['page']) {
         this.page = +params['page'] || 1;// Default to page 1 if not provided
       }
-      if (params['tags']){
+      if (params['tags']) {
         this.tags = params['tags'].split(',') || [];
       }
       this.loadImages();
@@ -102,11 +103,11 @@ export class ImagesComponent implements OnInit {
           this.images = data.images;
           this.total = data.total;
           this.total = (this.page * this.pageSize) < this.total ? this.total : this.page * this.pageSize;
+          this.onImageLoad();
         },
-        error: (x) => console.log(x),
+        error: (x) => x,
       }
-    )
-    ;
+    );
   }
 
 
@@ -118,7 +119,6 @@ export class ImagesComponent implements OnInit {
     this.loadImages();
 
   }
-
   onImageLoad(): void {
     if (this.masonry) {
       this.masonry.reloadItems();
@@ -136,7 +136,6 @@ export class ImagesComponent implements OnInit {
     this.updateQueryParams();
     this.loadImages();
   }
-
   nextPage() {
     this.updateQueryParams();
     this.page = this.page + 1;
@@ -150,6 +149,4 @@ export class ImagesComponent implements OnInit {
       this.page = this.page - 1;
     }
   }
-
-  protected readonly oninput = oninput;
 }

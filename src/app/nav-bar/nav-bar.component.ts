@@ -17,7 +17,9 @@ import {provideAnimations} from "@angular/platform-browser/animations";
   providers: []
 })
 export class NavBarComponent {
-  constructor(private authService: AuthService) {
+  protected isAdmin = false;
+  constructor(protected authService: AuthService) {
+    this.isAdmin = this.authService.isAdmin();
   }
 
   get isAuthenticated(): boolean {

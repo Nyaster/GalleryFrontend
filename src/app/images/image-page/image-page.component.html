@@ -3,13 +3,15 @@
   <div class="row">
     <div class="col-sm-12 col-md-2 order-last order-md-first">
       <ul>
-        @for (tags of currentImage.tags; track $index) {
-          <li><a [routerLink]="['/images']" [queryParams]="{tags:tags}" [textContent]="tags"></a></li>
+        @defer (when (currentImage !== undefined)) {
+          @for (tags of currentImage.tags; track $index) {
+            <li><a [routerLink]="['/images']" [queryParams]="{tags:tags}" [textContent]="tags"></a></li>
+          }
         }
       </ul>
     </div>
     <div class="col-md-10 order-md-last">
-      <img class="img-fluid" src="{{config.apiUrl+'/api/images/'+id+'/content'}}" alt="">
+      <img class="img-fluid" [src]="environment.apiUrl+'/api/images/'+id+'/content'|authImage | async" alt="">
     </div>
   </div>
 </div>
