@@ -17,10 +17,6 @@ export class AdminGuardService implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if(this.authService.isAdmin()){
-          return true;
-        }else {
-          return false;
-        }
+        return this.authService.isAdmin();
     }
 }

@@ -41,7 +41,6 @@ export class AuthService {
         this.loadTokenFromStorage();
       }), catchError((error: HttpErrorResponse) => {
         // Handle the error and rethrow it
-        console.error("Login failed in authService:", error);
         return throwError(() => error); // Rethrow the error to be caught by the calling code
       }));
   }
@@ -107,7 +106,6 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    console.log(this.role)
     const type = typeof this.role;
     return (type === "string") ? this?.role === 'Admin' :
       (this.role as string[])?.find(x => x === 'Admin') === 'Admin';

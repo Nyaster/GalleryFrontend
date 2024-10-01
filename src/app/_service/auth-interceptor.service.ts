@@ -20,32 +20,43 @@ export class AuthInterceptorService implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const accessToken = this.authService.AuthToken; // Upd// ated reference
+    const accessToken = this.authService.AuthToken; // Обновлённая ссылка
     if (accessToken) {
-      console.log(accessToken);
       req = req.clone({
         setHeaders: {
           Authorization: `Bearer ${accessToken}`
         }
       });
     }
-    return next.handle(req).pipe(tap({
-      error: (x) => {
-        const header: Headers = x.headers;
-        if (header.get("Token-expired") === "true") {
-          this.authService.refresh().subscribe({
-            next: (x => {
-              req = req.clone({
-                setHeaders: {
-                  authorization: `Bearer ${x.token}`
-                }
-              });
-              next.handle(req);
-            })
-          })
+
+    return next.handle(req).pipe(
+      tap({
+        error: (error) => {
+          const header: Headers = error.headers;
+          if (header.get("Token-expired") === "true") {
+            return this.authService.refresh().pipe(
+              switchMap((refreshResponse) => {
+                // Обновляем токен в заголовках
+                const newToken = refreshResponse.token;
+                req = req.clone({
+                  setHeaders: {
+                    Authorization: `Bearer ${newToken}`
+                  }
+                });
+
+                return next.handle(req);
+              }),
+              catchError((refreshError) => {
+                // Обработка ошибок при обновлении токена (например, выход пользователя)
+                return throwError(refreshError);
+              })
+            );
+          }
+
+          // Если токен не истек, просто выбрасываем ошибку
+          return throwError(error);
         }
-      }
-    }));
-    ;
+      })
+    );
   }
 }
