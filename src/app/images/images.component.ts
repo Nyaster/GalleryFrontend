@@ -53,12 +53,12 @@ export class ImagesComponent implements OnInit {
   // @ts-ignore
   private url;
 
-  @HostListener('window:keyup.shift.arrowRight', ['$event'])
+  @HostListener('window:keyup.control.arrowRight', ['$event'])
   keyboarderEvent(event: KeyboardEvent) {
     this.nextPage();
   }
 
-  @HostListener('window:keyup.shift.arrowLeft', ['$event'])
+  @HostListener('window:keyup.control.arrowLeft', ['$event'])
   keyboarderEvent1(event: KeyboardEvent) {
     this.prevPage();
   }
@@ -119,7 +119,6 @@ export class ImagesComponent implements OnInit {
     this.loadImages();
 
   }
-  @HostListener('window:keyup.shift.arrowLeft', ['$event'])
   onImageLoad(): void {
     if (this.masonry) {
       this.masonry.reloadItems();
