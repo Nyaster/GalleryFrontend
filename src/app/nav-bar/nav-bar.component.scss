@@ -1,0 +1,8 @@
+.btn-outline {
+  color: var(--bs-btn-color);
+  border: var(--bs-btn-border-width) solid var(--bs-btn-color);
+}
+.btn-outline:hover {
+  background-color: var(--bs-btn-color);
+  color: var(--bs-body-bg);
+}

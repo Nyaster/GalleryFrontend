@@ -1,14 +1,31 @@
-import { Component } from '@angular/core';
+import {Component, model} from '@angular/core';
+import {ThemeService} from "../_service/theme.service";
+import {ThemeSettings} from "../_enums/theme-settings";
+import {FormsModule} from "@angular/forms";
+import {ButtonsModule} from "ngx-bootstrap/buttons";
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [],
+  imports: [
+    FormsModule,
+    ButtonsModule
+  ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-  changeTheme(){
-    document.body.setAttribute('data-bs-theme', 'dark');
+  protected currentTheme = model<ThemeSettings>(0)
+
+  constructor(private themeService: ThemeService) {
+    this.currentTheme.set(themeService.themeSetting());
+    themeService.changeTheme();
+    this.currentTheme.subscribe((x) => {
+      themeService.themeSetting.set(x);
+      themeService.changeTheme();
+    })
   }
+
 }
+
+
