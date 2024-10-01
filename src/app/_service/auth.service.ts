@@ -52,7 +52,7 @@ export class AuthService {
         this.isLoggedIn = true;
         this.loadTokenFromStorage();
       }), catchError(err => {
-        return []
+        return throwError(() => err);
       }));
   }
 

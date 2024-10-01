@@ -1,21 +1,20 @@
 import {Component} from '@angular/core';
-import {AuthService} from "../_service/auth.service";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {LoginModel} from "../_interfaces/login.model";
-import {ActivatedRoute, Router} from "@angular/router";
-
+import {AuthService} from "../../_service/auth.service";
+import {Router} from "@angular/router";
+import {LoginModel} from "../../_interfaces/login.model";
 
 @Component({
-  selector: 'app-authorization',
+  selector: 'app-register',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
     FormsModule,
+    ReactiveFormsModule
   ],
-  templateUrl: './authorization.component.html',
-  styleUrl: './authorization.component.scss'
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss'
 })
-export class AuthorizationComponent {
+export class RegisterComponent {
   login = new FormControl('');
   password = new FormControl('');
   errorMessage: any;
@@ -26,7 +25,7 @@ export class AuthorizationComponent {
 
   authorization() {
     var loginModel = new LoginModel(this.login.getRawValue()!, this.password.getRawValue()!);
-    this.authService.login(loginModel).subscribe({
+    this.authService.register(loginModel).subscribe({
       next: (x) => {
         this.errorMessage = null;
         this.router.navigate(['/images']);
