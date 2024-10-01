@@ -11,7 +11,7 @@
       </ul>
     </div>
     <div class="col-md-10 order-md-last">
-      <img class="img-fluid" [src]="environment+'/api/images/'+id+'/content'|authImage | async" alt="">
+      <img class="img-fluid" [src]="environment.apiUrl+'/api/images/'+id+'/content'|authImage | async" alt="">
     </div>
   </div>
 </div>

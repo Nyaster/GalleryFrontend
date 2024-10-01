@@ -1,7 +1,7 @@
 <div ngxMasonryItem class="col-sm-6 col-md-3">
   <div class="card">
     <a routerLink="/images/{{image.id}}">
-      <img masonryLazy [src]="(environment+'/'+image.urlToImage+'/content?asJpeg=true' | authImage | async )"
+      <img masonryLazy [src]="(environment.apiUrl+'/'+image.urlToImage+'/content?asJpeg=true' | authImage | async )"
            width="{{image.width}}"
            height="{{image.height}}"
            class="card-img img-fluid masonry-item"
