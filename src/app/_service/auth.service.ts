@@ -4,8 +4,8 @@ import {LoginModel} from "../_interfaces/login.model";
 import {Authorization} from "../_interfaces/Authorization.model";
 import {catchError, map, tap, throwError} from "rxjs";
 import {Router} from "@angular/router";
-import {ConfigurationService} from "../configuration.service";
 import * as jwt_decode from "jwt-decode";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,8 @@ export class AuthService {
   private token: string | null = null;
   private role: string[] | string | null = null;
 
-  constructor(private http: HttpClient, private router: Router, private configuration: ConfigurationService) {
-    this.apiUrl = configuration.apiUrl;
+  constructor(private http: HttpClient, private router: Router) {
+    this.apiUrl = environment.apiUrl;
     this.loadTokenFromStorage();
   }
 

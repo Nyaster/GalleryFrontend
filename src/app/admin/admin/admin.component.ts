@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ConfigurationService} from "../../configuration.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-admin',
@@ -12,13 +12,16 @@ import {ConfigurationService} from "../../configuration.service";
 export class AdminComponent {
   private apiUrl: string;
 
-  constructor(private http: HttpClient, private config: ConfigurationService) {
-    this.apiUrl = config.apiUrl;
+  constructor(private http: HttpClient) {
+    this.apiUrl = environment.apiUrl;
   }
 
   checkUpdates() {
     this.http.post(this.apiUrl+"/api/admin/start-scraping","",).subscribe(
-
+    )
+  }
+  downloadAllImages() {
+    this.http.post(this.apiUrl+"/api/admin/downloadImages","",).subscribe(
     )
   }
 }

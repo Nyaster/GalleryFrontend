@@ -4,7 +4,7 @@ import {BehaviorSubject, debounceTime, distinctUntilChanged, Subject} from "rxjs
 import {FormsModule} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {AsyncPipe} from "@angular/common";
-import {ConfigurationService} from "../../configuration.service";
+import {environment} from "../../../environments/environment";
 
 interface Tag {
   name: string;
@@ -23,7 +23,7 @@ interface Tag {
   encapsulation: ViewEncapsulation.None,
 })
 export class SearchComponent implements OnInit {
-  constructor(private http: HttpClient, private tagifyService: TagifyService, private config: ConfigurationService) {
+  constructor(private http: HttpClient, private tagifyService: TagifyService) {
 
   }
 
@@ -105,7 +105,7 @@ export class SearchComponent implements OnInit {
   }
 
   getTagsSuggestion($event: string) {
-    this.http.get<Tag[]>(this.config.apiUrl + `/api/tags/suggestions?tag=${$event}`)
+    this.http.get<Tag[]>(environment.apiUrl + `/api/tags/suggestions?tag=${$event}`)
       .subscribe(suggestions => {
         this.whitelist$.next(suggestions.map(x => x.name));
         this.tagifyService.get("search").dropdown.show();

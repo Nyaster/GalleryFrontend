@@ -2,8 +2,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {AsyncPipe, NgOptimizedImage} from "@angular/common";
 import {NgxMasonryModule} from "ngx-masonry";
 import {RouterLink} from "@angular/router";
-import {ConfigurationService} from "../../configuration.service";
 import {AuthImagePipe} from "../../auth-image.pipe";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-image-card',
@@ -22,7 +22,8 @@ export class ImageCardComponent {
   @Input() image: any;
   @Output() imageLoaded = new EventEmitter();
 
-  constructor(protected config: ConfigurationService) {
+  constructor() {
   }
 
+  protected readonly environment = environment;
 }

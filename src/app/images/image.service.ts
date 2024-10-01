@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ConfigurationService} from "../configuration.service";
+import {environment} from "../../environments/environment";
 
 export interface AppImageDto {
   id: number;
@@ -28,8 +28,8 @@ export class ImageService {
   private apiImagesEndpoint: string;
   private images: AppImageDto[] = [];
 
-  constructor(private http: HttpClient, private config: ConfigurationService) {
-    this.apiImagesEndpoint = config.apiUrl + '/api/images/'
+  constructor(private http: HttpClient) {
+    this.apiImagesEndpoint = environment.apiUrl + '/api/images/'
   }
 
   getImages(tags: string[], orderBy: string, page: number, pageSize: number): Observable<PageableImageDto> {
