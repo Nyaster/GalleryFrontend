@@ -20,7 +20,7 @@ import {environment} from "../../../environments/environment";
 })
 export class ImagePageComponent implements OnInit {
   id!: number | null;
-  @Input() currentImage!: AppImageDto;
+  @Input() currentImage!: AppImageDto | undefined;
 
   constructor(private route: ActivatedRoute, private router: Router, private imageService: ImageService) {
 

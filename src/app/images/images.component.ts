@@ -37,21 +37,8 @@ export class ImagesComponent implements OnInit {
   orderBy: string = 'uploadDate'; // Default ordering by upload date
   tags: string[] = [];// Add tags for filtering, e.g., ['nature', 'animals']
   total: number = 0
-  optionsMasonry: NgxMasonryOptions = {
-
-  }
-  // @ts-ignore
-  private url;
-
-  @HostListener('window:keyup.control.arrowRight', ['$event'])
-  keyboarderEvent(event: KeyboardEvent) {
-    this.nextPage();
-  }
-
-  @HostListener('window:keyup.control.arrowLeft', ['$event'])
-  keyboarderEvent1(event: KeyboardEvent) {
-    this.prevPage();
-  }
+  optionsMasonry: NgxMasonryOptions = {}
+  private url: any;
 
   constructor(private location: Location, private imageService: ImageService,
               private viewportScroller: ViewportScroller, private route: ActivatedRoute, private router: Router) {
@@ -109,6 +96,7 @@ export class ImagesComponent implements OnInit {
     this.loadImages();
 
   }
+
   onImageLoad(): void {
     if (this.masonry) {
       this.masonry.reloadItems();
@@ -126,11 +114,14 @@ export class ImagesComponent implements OnInit {
     this.updateQueryParams();
     this.loadImages();
   }
+
+  @HostListener('window:keyup.control.arrowRight', ['$event'])
   nextPage() {
     this.updateQueryParams();
     this.page = this.page + 1;
-
   }
+
+  @HostListener('window:keyup.control.arrowLeft', ['$event'])
 
   prevPage() {
 
