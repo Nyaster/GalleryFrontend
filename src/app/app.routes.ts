@@ -8,6 +8,8 @@ import {ProfileComponent} from "./profile/profile.component";
 import {AdminComponent} from "./admin/admin/admin.component";
 import {AdminGuardService} from "./_service/admin-guard.service";
 import {RegisterComponent} from "./authorization/register/register.component";
+import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
+import {UploadComponent} from "./upload/upload.component";
 
 export const routes: Routes = [
   {path: "login", component: AuthorizationComponent}, {
@@ -23,5 +25,7 @@ export const routes: Routes = [
     path: "admin", component: AdminComponent, canActivate: [AuthGuardService, AdminGuardService]
   },
   {path: "profile", component: ProfileComponent},
-  {path: "", redirectTo: "home", pathMatch: "full"}
+  {path: "upload", component: UploadComponent},
+  {path: "", redirectTo: "home", pathMatch: "full"},
+  {path: '**', component: PageNotFoundComponent}
 ];
