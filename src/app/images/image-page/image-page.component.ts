@@ -1,7 +1,7 @@
 import {Component, Input, input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {map} from "rxjs";
-import {AsyncPipe, NgOptimizedImage} from "@angular/common";
+import {AsyncPipe, DatePipe, NgOptimizedImage} from "@angular/common";
 import {AppImageDto, ImageService} from "../image.service";
 import {AuthImagePipe} from "../../auth-image.pipe";
 import {environment} from "../../../environments/environment";
@@ -13,14 +13,15 @@ import {environment} from "../../../environments/environment";
     NgOptimizedImage,
     RouterLink,
     AuthImagePipe,
-    AsyncPipe
+    AsyncPipe,
+    DatePipe
   ],
   templateUrl: './image-page.component.html',
   styleUrl: './image-page.component.scss'
 })
 export class ImagePageComponent implements OnInit {
   id!: number | null;
-  @Input() currentImage!: AppImageDto | undefined;
+  @Input() currentImage!: AppImageDto;
 
   constructor(private route: ActivatedRoute, private router: Router, private imageService: ImageService) {
 

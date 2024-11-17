@@ -4,6 +4,7 @@ import {NgxMasonryModule} from "ngx-masonry";
 import {RouterLink} from "@angular/router";
 import {AuthImagePipe} from "../../auth-image.pipe";
 import {environment} from "../../../environments/environment";
+import {ImageTempGeneratorService} from "../image-temp-generator.service";
 
 @Component({
   selector: 'app-image-card',
@@ -22,8 +23,8 @@ export class ImageCardComponent {
   @Input() image: any;
   @Output() imageLoaded = new EventEmitter();
 
-  constructor() {
-  }
+  constructor(private imageTempGen: ImageTempGeneratorService) {
 
+  }
   protected readonly environment = environment;
 }

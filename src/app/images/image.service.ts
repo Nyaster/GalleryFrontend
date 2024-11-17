@@ -6,7 +6,7 @@ import {environment} from "../../environments/environment";
 export interface AppImageDto {
   id: number;
   uploadedBy: string;
-  uploadedDate: string;
+  uploadDate: Date;
   urlToImage: string;
   width: number;
   height: number;
@@ -43,7 +43,7 @@ export class ImageService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json' // Ensure that Content-Type is set correctly
     })
-    return this.http.get<PageableImageDto>(environment.apiUrl+ '/api/search/', {params, headers});
+    return this.http.get<PageableImageDto>(environment.apiUrl+ '/api/search', {params, headers});
   }
 
   getImageInfo(id: number): Observable<AppImageDto> {

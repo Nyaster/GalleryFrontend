@@ -1,5 +1,4 @@
-
-<tagify name="search" class="col-12 col-sm-10 block"
+<tagify name="search" class="col-12 col-sm-8 block"
         [(ngModel)]="tags"
         inputClass="form-control me-2"
         [settings]="settings"
@@ -10,6 +9,15 @@
         (tInput)="onInputSuggestion($event)"
         (remove)="onRemove($event)"
 ></tagify>
+<div class="col-12 col-sm-2">
+
+
+  <select class="form-select" aria-label="Large select example" [(ngModel)]="test">
+    <option value="1" selected>Official</option>
+    <option value="2">Fan arts</option>
+    <option value="3">All images</option>
+  </select>
+</div>
 <div class="col-sm-2 col-12">
   <button (click)="onSearch()" class="btn btn-primary w-100">Search</button>
 </div>

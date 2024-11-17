@@ -2,7 +2,7 @@
   <div class="card">
     <a routerLink="/images/{{image.id}}">
       <img
-        [src]="(environment.apiUrl+'/'+image.urlToImage+'/content?asJpeg=true' | authImage | async )"
+        [src]="(environment.apiUrl+'/'+image.urlToImage+'/content?asJpeg=true' | authImage:image.width:image.height | async )"
         width="{{image.width}}"
         height="{{image.height}}"
         class="card-img img-fluid masonry-item"

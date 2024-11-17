@@ -1,6 +1,4 @@
-<div class="container-fluid mt-5">
-  <h2>Image Gallery</h2>
-  <router-outlet></router-outlet>
+<div class="container-fluid mt-5 min-vh-75">
   <div class="row justify-content-center">
     <div class="col-xs-auto">
       @defer (when total > 2) {
@@ -25,7 +23,7 @@
     }
   </ngx-masonry>
   <br>
-<div class="row">
+<div class="row end-100">
   @defer (when total > 2) {
     <pagination
       class="justify-content-center pagination-sm" [boundaryLinks]="true" [(ngModel)]="page" [maxSize]="5"

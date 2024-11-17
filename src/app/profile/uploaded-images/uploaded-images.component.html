@@ -1,0 +1,24 @@
+<div class="container mt-4">
+  <div class="row">
+    <h2>Uploaded :</h2>
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4 scrollable-list">
+      @for (image of images; track image.id) {
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title text-truncate">Image #{{ image.id }}</h5>
+            <p class="card-text">
+              <small class="text-muted">Date: {{ image.uploadDate | date: "yyyy-MM-dd" }}</small>
+            </p>
+            <p>@for (tags of image.tags; track $index) {
+              {{ tags + ', ' }}
+            }</p>
+          </div>
+          <div class="card-footer">
+            <a [routerLink]="['/','images',image.id]" class="btn btn-sm btn-primary">View
+              Image</a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  signal,
+  ViewEncapsulation
+} from '@angular/core';
 import {TagData, TagifyModule, TagifyService, TagifySettings} from "ngx-tagify";
 import {BehaviorSubject, debounceTime, distinctUntilChanged, Subject} from "rxjs";
 import {FormsModule} from "@angular/forms";
@@ -23,8 +33,9 @@ interface Tag {
   encapsulation: ViewEncapsulation.None,
 })
 export class SearchComponent implements OnInit {
-  constructor(private http: HttpClient, private tagifyService: TagifyService) {
+  public test = "3";
 
+  constructor(private http: HttpClient, private tagifyService: TagifyService) {
   }
 
   ngOnInit(): void {
@@ -110,5 +121,7 @@ export class SearchComponent implements OnInit {
         this.whitelist$.next(suggestions.map(x => x.name));
         this.tagifyService.get("search").dropdown.show();
       })
+    console.log(this.test)
   }
+
 }
