@@ -16,7 +16,7 @@ import {HttpClient} from "@angular/common/http";
 import {AsyncPipe} from "@angular/common";
 import {environment} from "../../../environments/environment";
 
-interface Tag {
+export interface Tag {
   name: string;
 }
 
@@ -121,7 +121,6 @@ export class SearchComponent implements OnInit {
         this.whitelist$.next(suggestions.map(x => x.name));
         this.tagifyService.get("search").dropdown.show();
       })
-    console.log(this.test)
   }
 
 }

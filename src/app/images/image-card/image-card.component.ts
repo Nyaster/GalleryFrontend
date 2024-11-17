@@ -5,6 +5,7 @@ import {RouterLink} from "@angular/router";
 import {AuthImagePipe} from "../../auth-image.pipe";
 import {environment} from "../../../environments/environment";
 import {ImageTempGeneratorService} from "../image-temp-generator.service";
+import {AppImageDto} from "../image.service";
 
 @Component({
   selector: 'app-image-card',
@@ -20,10 +21,11 @@ import {ImageTempGeneratorService} from "../image-temp-generator.service";
   styleUrl: './image-card.component.scss'
 })
 export class ImageCardComponent {
-  @Input() image: any;
+  @Input() image!: AppImageDto;
   @Output() imageLoaded = new EventEmitter();
 
   constructor(private imageTempGen: ImageTempGeneratorService) {
+    console.log()
 
   }
   protected readonly environment = environment;
