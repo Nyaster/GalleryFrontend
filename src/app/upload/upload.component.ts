@@ -7,14 +7,13 @@ import {Tag} from "../images/search/search.component";
 import {BehaviorSubject, debounceTime, distinctUntilChanged, Subject} from "rxjs";
 
 @Component({
-  selector: 'app-upload',
-  standalone: true,
-  imports: [
-    FormsModule,
-    TagifyModule
-  ],
-  templateUrl: './upload.component.html',
-  styleUrl: './upload.component.scss'
+    selector: 'app-upload',
+    imports: [
+        FormsModule,
+        TagifyModule
+    ],
+    templateUrl: './upload.component.html',
+    styleUrl: './upload.component.scss'
 })
 export class UploadComponent implements OnInit {
   apiImagesEndpoint: string = '';

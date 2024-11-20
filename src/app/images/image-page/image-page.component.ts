@@ -7,17 +7,16 @@ import {AuthImagePipe} from "../../auth-image.pipe";
 import {environment} from "../../../environments/environment";
 
 @Component({
-  selector: 'app-image-page',
-  standalone: true,
-  imports: [
-    NgOptimizedImage,
-    RouterLink,
-    AuthImagePipe,
-    AsyncPipe,
-    DatePipe
-  ],
-  templateUrl: './image-page.component.html',
-  styleUrl: './image-page.component.scss'
+    selector: 'app-image-page',
+    imports: [
+        NgOptimizedImage,
+        RouterLink,
+        AuthImagePipe,
+        AsyncPipe,
+        DatePipe
+    ],
+    templateUrl: './image-page.component.html',
+    styleUrl: './image-page.component.scss'
 })
 export class ImagePageComponent implements OnInit {
   id!: number | null;

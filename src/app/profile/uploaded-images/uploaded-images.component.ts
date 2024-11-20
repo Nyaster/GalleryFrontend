@@ -6,14 +6,13 @@ import {DatePipe} from "@angular/common";
 import {RouterLink} from "@angular/router";
 
 @Component({
-  selector: 'app-uploaded-images',
-  standalone: true,
-  imports: [
-    DatePipe,
-    RouterLink
-  ],
-  templateUrl: './uploaded-images.component.html',
-  styleUrl: './uploaded-images.component.scss'
+    selector: 'app-uploaded-images',
+    imports: [
+        DatePipe,
+        RouterLink
+    ],
+    templateUrl: './uploaded-images.component.html',
+    styleUrl: './uploaded-images.component.scss'
 })
 export class UploadedImagesComponent implements OnInit {
   apiUrl: string;

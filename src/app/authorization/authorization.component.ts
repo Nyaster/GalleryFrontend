@@ -6,14 +6,13 @@ import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
-  selector: 'app-authorization',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-  ],
-  templateUrl: './authorization.component.html',
-  styleUrl: './authorization.component.scss'
+    selector: 'app-authorization',
+    imports: [
+        ReactiveFormsModule,
+        FormsModule,
+    ],
+    templateUrl: './authorization.component.html',
+    styleUrl: './authorization.component.scss'
 })
 export class AuthorizationComponent {
   login = new FormControl('');

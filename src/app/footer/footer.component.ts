@@ -5,14 +5,13 @@ import {FormsModule} from "@angular/forms";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
 
 @Component({
-  selector: 'app-footer',
-  standalone: true,
-  imports: [
-    FormsModule,
-    ButtonsModule
-  ],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+    selector: 'app-footer',
+    imports: [
+        FormsModule,
+        ButtonsModule
+    ],
+    templateUrl: './footer.component.html',
+    styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
   protected currentTheme = model<ThemeSettings>(0)

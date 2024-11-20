@@ -5,16 +5,15 @@ import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 import {provideAnimations} from "@angular/platform-browser/animations";
 
 @Component({
-  selector: 'app-nav-bar',
-  standalone: true,
-  templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.scss',
-  imports: [
-    BsDropdownModule,
-    RouterLink,
-    RouterLinkActive
-  ],
-  providers: []
+    selector: 'app-nav-bar',
+    templateUrl: './nav-bar.component.html',
+    styleUrl: './nav-bar.component.scss',
+    imports: [
+        BsDropdownModule,
+        RouterLink,
+        RouterLinkActive
+    ],
+    providers: []
 })
 export class NavBarComponent {
   protected isAdmin = false;

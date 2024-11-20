@@ -11,23 +11,22 @@ import {SearchComponent} from "./search/search.component";
 import {ImageCardComponent} from "./image-card/image-card.component";
 
 @Component({
-  selector: 'app-images',
-  standalone: true,
-  imports: [
-    DatePipe,
-    NgForOf,
-    NgOptimizedImage,
-    PaginationModule,
-    FormsModule,
-    NgxMasonryModule,
-    TagifyModule,
-    SearchComponent,
-    RouterOutlet,
-    RouterLink,
-    ImageCardComponent,
-  ],
-  templateUrl: './images.component.html',
-  styleUrl: './images.component.scss'
+    selector: 'app-images',
+    imports: [
+        DatePipe,
+        NgForOf,
+        NgOptimizedImage,
+        PaginationModule,
+        FormsModule,
+        NgxMasonryModule,
+        TagifyModule,
+        SearchComponent,
+        RouterOutlet,
+        RouterLink,
+        ImageCardComponent,
+    ],
+    templateUrl: './images.component.html',
+    styleUrl: './images.component.scss'
 })
 export class ImagesComponent implements OnInit {
   @ViewChild(NgxMasonryComponent) masonry!: NgxMasonryComponent;

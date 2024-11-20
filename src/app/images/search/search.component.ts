@@ -21,16 +21,15 @@ export interface Tag {
 }
 
 @Component({
-  selector: 'app-search',
-  standalone: true,
-  imports: [
-    TagifyModule,
-    FormsModule,
-    AsyncPipe
-  ],
-  templateUrl: './search.component.html',
-  styleUrl: './search.component.scss',
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-search',
+    imports: [
+        TagifyModule,
+        FormsModule,
+        AsyncPipe
+    ],
+    templateUrl: './search.component.html',
+    styleUrl: './search.component.scss',
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchComponent implements OnInit {
   public test = "3";
