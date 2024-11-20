@@ -17,6 +17,7 @@ import {BehaviorSubject, debounceTime, distinctUntilChanged, Subject} from "rxjs
   styleUrl: './upload.component.scss'
 })
 export class UploadComponent implements OnInit {
+  apiImagesEndpoint: string = '';
   imagePreviewUrl = '';
   whitelist$ = new BehaviorSubject<string[]>([]);
   selectedFile: File | null = null;
@@ -37,6 +38,7 @@ export class UploadComponent implements OnInit {
   };
 
   constructor(private http: HttpClient, private tagifyService: TagifyService) {
+    this.apiImagesEndpoint = environment.apiUrl + '/api/images/'
   }
 
   ngOnInit(): void {
@@ -81,10 +83,14 @@ export class UploadComponent implements OnInit {
     const formData = new FormData();
     formData.append('ImageFile', this.selectedFile);
     formData.append('IsHidden', String(this.isHidden));
-    formData.append('Tags', JSON.stringify(this.tags));
+    // @ts-ignore
+    const value = this.tags.map(x => x.value);
+    value.forEach(x=>{
+      formData.append('Tags', x);
+    });
 
-    // Send formData to backend
-    this.http.post('/api/images', formData).subscribe({
+
+    this.http.post(this.apiImagesEndpoint, formData).subscribe({
       next: () => alert('Image uploaded successfully!'),
       error: (err) => {
         console.error('Upload failed:', err);

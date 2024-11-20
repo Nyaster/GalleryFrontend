@@ -24,8 +24,7 @@ export class ImageCardComponent {
   @Input() image!: AppImageDto;
   @Output() imageLoaded = new EventEmitter();
 
-  constructor(private imageTempGen: ImageTempGeneratorService) {
-    console.log()
+  constructor() {
 
   }
   protected readonly environment = environment;

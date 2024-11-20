@@ -24,10 +24,6 @@ export class ImagePageComponent implements OnInit {
   @Input() currentImage!: AppImageDto;
 
   constructor(private route: ActivatedRoute, private router: Router, private imageService: ImageService) {
-
-  }
-
-  ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.id = Number(params.get("id"));
       if (this.currentImage === undefined) {
@@ -37,6 +33,10 @@ export class ImagePageComponent implements OnInit {
       }
 
     })
+  }
+
+  ngOnInit(): void {
+
   }
 
   protected readonly environment = environment;
