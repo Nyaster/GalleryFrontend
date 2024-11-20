@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {AsyncPipe, NgOptimizedImage} from "@angular/common";
 import {NgxMasonryModule} from "ngx-masonry";
 import {RouterLink} from "@angular/router";
@@ -20,8 +20,8 @@ import {AppImageDto} from "../image.service";
     styleUrl: './image-card.component.scss'
 })
 export class ImageCardComponent {
-  @Input() image!: AppImageDto;
-  @Output() imageLoaded = new EventEmitter();
+  readonly image = input.required<AppImageDto>();
+  readonly imageLoaded = output();
 
   constructor() {
 

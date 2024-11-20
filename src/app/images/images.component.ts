@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, viewChild} from '@angular/core';
 import {AppImageDto, ImageService} from "./image.service";
 import {DatePipe, Location, NgForOf, NgOptimizedImage, ViewportScroller} from "@angular/common";
 import {PageChangedEvent, PaginationModule} from "ngx-bootstrap/pagination";
@@ -29,7 +29,7 @@ import {ImageCardComponent} from "./image-card/image-card.component";
     styleUrl: './images.component.scss'
 })
 export class ImagesComponent implements OnInit {
-  @ViewChild(NgxMasonryComponent) masonry!: NgxMasonryComponent;
+  readonly masonry = viewChild.required(NgxMasonryComponent);
   images: AppImageDto[] = [];
   page: number = 0;
   pageSize: number = 20; // Set page size as required
@@ -97,9 +97,10 @@ export class ImagesComponent implements OnInit {
   }
 
   onImageLoad(): void {
-    if (this.masonry) {
-      this.masonry.reloadItems();
-      this.masonry.layout();
+    const masonry = this.masonry();
+    if (masonry) {
+      masonry.reloadItems();
+      masonry.layout();
     }
   }
 

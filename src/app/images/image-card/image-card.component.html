@@ -1,14 +1,14 @@
 <div ngxMasonryItem class="col-sm-6 col-md-3">
   <div class="card">
-    <a routerLink="/images/{{image.id}}">
+    <a routerLink="/images/{{image().id}}">
       <img
-        [src]="(environment.apiUrl+'/'+image.urlToImage+'/content?asJpeg=true' | authImage:image.width:image.height | async )"
-        width="{{image.width}}"
-        height="{{image.height}}"
+        [src]="(environment.apiUrl+'/'+image().urlToImage+'/content?asJpeg=true' | authImage:image().width:image().height | async )"
+        width="{{image().width}}"
+        height="{{image().height}}"
         class="card-img img-fluid masonry-item"
-        [alt]="image.uploadedBy" (load)="imageLoaded.emit()">
+        [alt]="image().uploadedBy" (load)="imageLoaded.emit()">
       <div class="card-img-overlay hover-text-card">
-        <p [textContent]="image.tags">Image tegs</p>
+        <p [textContent]="image().tags">Image tegs</p>
       </div>
     </a>
   </div>

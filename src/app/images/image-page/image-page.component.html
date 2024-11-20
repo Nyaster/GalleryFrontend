@@ -3,16 +3,16 @@
   <div class="row">
     <div class="col-sm-12 col-md-2 order-last order-md-first">
       <ul>
-        @for (tags of currentImage?.tags; track $index) {
+        @for (tags of currentImage()?.tags; track $index) {
           <li><a [routerLink]="['/images']" [queryParams]="{tags:tags}" [textContent]="tags"></a></li>
         }
       </ul>
-      <p>Upload Date: {{ currentImage?.uploadDate | date }}</p>
+      <p>Upload Date: {{ currentImage()?.uploadDate | date }}</p>
     </div>
     <div class="col-md-10 order-md-last">
-      @defer (when currentImage !== undefined) {
+      @defer (when currentImage() !== undefined) {
         <img class="img-fluid"
-             [src]="environment.apiUrl+'/api/images/'+id+'/content'| authImage:currentImage.width:currentImage.height | async"
+             [src]="environment.apiUrl+'/api/images/'+id+'/content'| authImage:currentImage().width:currentImage().height | async"
              alt="">
       }
     </div>

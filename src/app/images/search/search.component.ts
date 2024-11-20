@@ -2,12 +2,11 @@ import {
   Component,
   computed,
   effect,
-  EventEmitter,
-  Input,
   OnInit,
-  Output,
   signal,
-  ViewEncapsulation
+  ViewEncapsulation,
+  input,
+  output
 } from '@angular/core';
 import {TagData, TagifyModule, TagifyService, TagifySettings} from "ngx-tagify";
 import {BehaviorSubject, debounceTime, distinctUntilChanged, Subject} from "rxjs";
@@ -41,17 +40,18 @@ export class SearchComponent implements OnInit {
     this.searchSubject.pipe(debounceTime(300), distinctUntilChanged()).subscribe((search: string) => {
       this.getTagsSuggestion(search);
     });
-    this.whitelist$.next(this.tagsFromAbove)
-    this.tagsFromAbove.forEach((tag: string) => {
+    const tagsFromAbove = this.tagsFromAbove();
+    this.whitelist$.next(tagsFromAbove)
+    tagsFromAbove.forEach((tag: string) => {
       this.tags.push({value: tag})
 
     })
 
   }
 
-  @Input() tagsFromAbove!: string[];
-  @Output() tagsChange = new EventEmitter<string[]>();
-  @Output() search = new EventEmitter<boolean>();
+  readonly tagsFromAbove = input.required<string[]>();
+  readonly tagsChange = output<string[]>();
+  readonly search = output<boolean>();
 
   tags: TagData[] = [];
   // tags = 'foo'; -> if you want to pass as string

@@ -1,4 +1,4 @@
-import {Component, Input, input, OnInit} from '@angular/core';
+import {Component, input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {map} from "rxjs";
 import {AsyncPipe, DatePipe, NgOptimizedImage} from "@angular/common";
@@ -20,14 +20,14 @@ import {environment} from "../../../environments/environment";
 })
 export class ImagePageComponent implements OnInit {
   id!: number | null;
-  @Input() currentImage!: AppImageDto;
+  currentImage = input.required<AppImageDto>();
 
   constructor(private route: ActivatedRoute, private router: Router, private imageService: ImageService) {
     this.route.paramMap.subscribe(params => {
       this.id = Number(params.get("id"));
-      if (this.currentImage === undefined) {
+      if (this.currentImage() === undefined) {
         this.imageService.getImageInfo(this.id).subscribe(image => {
-          this.currentImage = image;
+          this.currentImage(image);
         });
       }
 
