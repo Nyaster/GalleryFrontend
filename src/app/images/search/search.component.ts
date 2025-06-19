@@ -23,8 +23,7 @@ export interface Tag {
     selector: 'app-search',
     imports: [
         TagifyModule,
-        FormsModule,
-        AsyncPipe
+        FormsModule
     ],
     templateUrl: './search.component.html',
     styleUrl: './search.component.scss',

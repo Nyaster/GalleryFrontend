@@ -5,7 +5,6 @@ import {UploadedImagesComponent} from "./uploaded-images/uploaded-images.compone
 @Component({
     selector: 'app-profile',
     imports: [
-        RouterOutlet,
         UploadedImagesComponent
     ],
     templateUrl: './profile.component.html',
