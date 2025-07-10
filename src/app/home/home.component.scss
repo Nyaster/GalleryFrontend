@@ -1,6 +1,6 @@
 .card {
   border-radius: 15px;
-  background-color: #f8f9fa;
+  background-color: var(--bs-background-color);
 }
 
 h1 span {
@@ -8,5 +8,5 @@ h1 span {
 }
 
 .lead {
-  color: #6c757d;
+  color: var(--bs-primary-color);
 }

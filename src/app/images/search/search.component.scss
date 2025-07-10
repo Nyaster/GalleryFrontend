@@ -7,6 +7,7 @@
 
 .tagify__input:empty::before {
   line-height: var(--bs-body-line-height);
+  color: var(--bs-body-color);
 }
 .tagify__input{
   line-height: var(--bs-body-line-height);

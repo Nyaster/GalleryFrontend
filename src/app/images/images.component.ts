@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, viewChild} from '@angular/core';
 import {AppImageDto, ImageService} from "./image.service";
 import {DatePipe, Location, NgForOf, NgOptimizedImage, ViewportScroller} from "@angular/common";
 import {PageChangedEvent, PaginationModule} from "ngx-bootstrap/pagination";
@@ -11,57 +11,34 @@ import {SearchComponent} from "./search/search.component";
 import {ImageCardComponent} from "./image-card/image-card.component";
 
 @Component({
-  selector: 'app-images',
-  standalone: true,
-  imports: [
-    DatePipe,
-    NgForOf,
-    NgOptimizedImage,
-    PaginationModule,
-    FormsModule,
-    NgxMasonryModule,
-    TagifyModule,
-    SearchComponent,
-    RouterOutlet,
-    RouterLink,
-    ImageCardComponent,
-  ],
-  templateUrl: './images.component.html',
-  styleUrl: './images.component.scss'
+    selector: 'app-images',
+    imports: [
+        DatePipe,
+        NgForOf,
+        NgOptimizedImage,
+        PaginationModule,
+        FormsModule,
+        NgxMasonryModule,
+        TagifyModule,
+        SearchComponent,
+        RouterOutlet,
+        RouterLink,
+        ImageCardComponent,
+    ],
+    templateUrl: './images.component.html',
+    styleUrl: './images.component.scss'
 })
 export class ImagesComponent implements OnInit {
-  @ViewChild(NgxMasonryComponent) masonry!: NgxMasonryComponent;
+  readonly masonry = viewChild.required(NgxMasonryComponent);
   images: AppImageDto[] = [];
   page: number = 0;
   pageSize: number = 20; // Set page size as required
   orderBy: string = 'uploadDate'; // Default ordering by upload date
   tags: string[] = [];// Add tags for filtering, e.g., ['nature', 'animals']
   total: number = 0
-  optionsMasonry: NgxMasonryOptions = {
-    animations: {
-      show: [
-        style({opacity: 0}),
-        animate('400ms ease-in', style({opacity: 1})),
-      ],
-      hide: [
-        style({opacity: '*'}),
-        animate('400ms ease-in', style({opacity: 0})),
-      ]
-    }
-
-  }
-  // @ts-ignore
-  private url;
-
-  @HostListener('window:keyup.control.arrowRight', ['$event'])
-  keyboarderEvent(event: KeyboardEvent) {
-    this.nextPage();
-  }
-
-  @HostListener('window:keyup.control.arrowLeft', ['$event'])
-  keyboarderEvent1(event: KeyboardEvent) {
-    this.prevPage();
-  }
+  fanImages: boolean = false;
+  optionsMasonry: NgxMasonryOptions = {}
+  private url: any;
 
   constructor(private location: Location, private imageService: ImageService,
               private viewportScroller: ViewportScroller, private route: ActivatedRoute, private router: Router) {
@@ -69,6 +46,7 @@ export class ImagesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.fanImages = (this.router.url === '/fan-images');
     this.route.queryParams.subscribe(params => {
       if (params['page']) {
         this.page = +params['page'] || 1;// Default to page 1 if not provided
@@ -76,6 +54,7 @@ export class ImagesComponent implements OnInit {
       if (params['tags']) {
         this.tags = params['tags'].split(',') || [];
       }
+
       this.loadImages();
     });
   }
@@ -98,7 +77,7 @@ export class ImagesComponent implements OnInit {
 
 
   loadImages(): void {
-    this.imageService.getImages(this.tags, this.orderBy, this.page, this.pageSize).subscribe({
+    this.imageService.getImages(this.tags, this.orderBy, this.page, this.pageSize, this.fanImages).subscribe({
         next: (data) => {
           this.images = data.images;
           this.total = data.total;
@@ -119,10 +98,12 @@ export class ImagesComponent implements OnInit {
     this.loadImages();
 
   }
+
   onImageLoad(): void {
-    if (this.masonry) {
-      this.masonry.reloadItems();
-      this.masonry.layout();
+    const masonry = this.masonry();
+    if (masonry) {
+      masonry.reloadItems();
+      masonry.layout();
     }
   }
 
@@ -136,12 +117,14 @@ export class ImagesComponent implements OnInit {
     this.updateQueryParams();
     this.loadImages();
   }
+
+  @HostListener('window:keyup.control.arrowRight', ['$event'])
   nextPage() {
     this.updateQueryParams();
     this.page = this.page + 1;
-
   }
 
+  @HostListener('window:keyup.control.arrowLeft', ['$event'])
   prevPage() {
 
     if (this.page > 0) {

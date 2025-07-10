@@ -31,6 +31,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     }
 
     return next.handle(req).pipe(
+
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 && error.headers.get('token-expired') === 'true') {
           return this.handle401Error(req, next);

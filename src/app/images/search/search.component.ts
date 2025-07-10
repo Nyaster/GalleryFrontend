@@ -1,4 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  OnInit,
+  signal,
+  ViewEncapsulation,
+  input,
+  output
+} from '@angular/core';
 import {TagData, TagifyModule, TagifyService, TagifySettings} from "ngx-tagify";
 import {BehaviorSubject, debounceTime, distinctUntilChanged, Subject} from "rxjs";
 import {FormsModule} from "@angular/forms";
@@ -6,42 +15,42 @@ import {HttpClient} from "@angular/common/http";
 import {AsyncPipe} from "@angular/common";
 import {environment} from "../../../environments/environment";
 
-interface Tag {
+export interface Tag {
   name: string;
 }
 
 @Component({
-  selector: 'app-search',
-  standalone: true,
-  imports: [
-    TagifyModule,
-    FormsModule,
-    AsyncPipe
-  ],
-  templateUrl: './search.component.html',
-  styleUrl: './search.component.scss',
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-search',
+    imports: [
+        TagifyModule,
+        FormsModule
+    ],
+    templateUrl: './search.component.html',
+    styleUrl: './search.component.scss',
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchComponent implements OnInit {
-  constructor(private http: HttpClient, private tagifyService: TagifyService) {
+  public test = "3";
 
+  constructor(private http: HttpClient, private tagifyService: TagifyService) {
   }
 
   ngOnInit(): void {
     this.searchSubject.pipe(debounceTime(300), distinctUntilChanged()).subscribe((search: string) => {
       this.getTagsSuggestion(search);
     });
-    this.whitelist$.next(this.tagsFromAbove)
-    this.tagsFromAbove.forEach((tag: string) => {
+    const tagsFromAbove = this.tagsFromAbove();
+    this.whitelist$.next(tagsFromAbove)
+    tagsFromAbove.forEach((tag: string) => {
       this.tags.push({value: tag})
 
     })
 
   }
 
-  @Input() tagsFromAbove!: string[];
-  @Output() tagsChange = new EventEmitter<string[]>();
-  @Output() search = new EventEmitter<boolean>();
+  readonly tagsFromAbove = input.required<string[]>();
+  readonly tagsChange = output<string[]>();
+  readonly search = output<boolean>();
 
   tags: TagData[] = [];
   // tags = 'foo'; -> if you want to pass as string
@@ -111,4 +120,5 @@ export class SearchComponent implements OnInit {
         this.tagifyService.get("search").dropdown.show();
       })
   }
+
 }
