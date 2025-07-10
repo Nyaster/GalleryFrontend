@@ -32,7 +32,7 @@ export class ImageService {
     this.apiImagesEndpoint = environment.apiUrl + '/api/images/'
   }
 
-  getImages(tags: string[], orderBy: string, page: number, pageSize: number): Observable<PageableImageDto> {
+  getImages(tags: string[], orderBy: string, page: number, pageSize: number, fanImages: boolean): Observable<PageableImageDto> {
     let params = new HttpParams()
       .set("page", page)
       .set("pageSize", pageSize)
@@ -43,7 +43,8 @@ export class ImageService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json' // Ensure that Content-Type is set correctly
     })
-    return this.http.get<PageableImageDto>(environment.apiUrl+ '/api/search', {params, headers});
+    let pathToLoad = fanImages ?  '/api/fan/search': '/api/images/search' ;
+    return this.http.get<PageableImageDto>(environment.apiUrl + pathToLoad, {params, headers});
   }
 
   getImageInfo(id: number): Observable<AppImageDto> {

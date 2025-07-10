@@ -17,6 +17,8 @@ export const routes: Routes = [
   },
   {
     path: "images", component: ImagesComponent, canActivate: [AuthGuardService]
+  },{
+    path: "fan-images", component: ImagesComponent, canActivate: [AuthGuardService]
   },
   {path: "images/:id", component: ImagePageComponent},
   {
@@ -25,7 +27,7 @@ export const routes: Routes = [
     path: "admin", component: AdminComponent, canActivate: [AuthGuardService, AdminGuardService]
   },
   {path: "profile", component: ProfileComponent},
-  {path: "upload", component: UploadComponent},
+  {path: "upload", component: UploadComponent, canActivate: [AuthGuardService, AdminGuardService]},
   {path: "", redirectTo: "home", pathMatch: "full"},
   {path: '**', component: PageNotFoundComponent}
 ];

@@ -11,6 +11,7 @@
       <ul class="navbar-nav justify-content-center col-12 col-md-auto me-auto">
         <li class="nav-item "><a routerLink="/home" routerLinkActive="active" class="nav-link px-2">Home</a></li>
         <li class="nav-item "><a routerLink="/images" routerLinkActive="active" class="nav-link px-2">Images</a></li>
+        <li class="nav-item "><a routerLink="/fan-images" routerLinkActive="active" class="nav-link px-2">Fan Images</a></li>
       </ul>
       @if (!isAuthenticated) {
         <ul class="navbar-nav justify-content-center col-12 col-md-auto">
@@ -25,7 +26,9 @@
           @if (this.authService.isAdmin()) {
             <li class="nav-item me-md-2"><a routerLink="/admin" class="btn col-12  btn-outline">Admin</a></li>
           }
-          <li class="nav-item me-md-2"><a class="btn btn-outline col-12" routerLink="/upload">Upload</a></li>
+          @if (this.authService.isAdmin()) {
+            <li class="nav-item me-md-2"><a class="btn btn-outline col-12" routerLink="/upload">Upload</a></li>
+          }
           <li class="nav-item me-md-2"><a routerLink="/profile" class="btn col-12  btn-outline">Profile</a></li>
           <li class="nav-item me-md-2"><a (click)="logout()" class="btn col-12  btn-outline">Log out</a></li>
         </menu>

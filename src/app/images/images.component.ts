@@ -36,6 +36,7 @@ export class ImagesComponent implements OnInit {
   orderBy: string = 'uploadDate'; // Default ordering by upload date
   tags: string[] = [];// Add tags for filtering, e.g., ['nature', 'animals']
   total: number = 0
+  fanImages: boolean = false;
   optionsMasonry: NgxMasonryOptions = {}
   private url: any;
 
@@ -45,6 +46,7 @@ export class ImagesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.fanImages = (this.router.url === '/fan-images');
     this.route.queryParams.subscribe(params => {
       if (params['page']) {
         this.page = +params['page'] || 1;// Default to page 1 if not provided
@@ -52,6 +54,7 @@ export class ImagesComponent implements OnInit {
       if (params['tags']) {
         this.tags = params['tags'].split(',') || [];
       }
+
       this.loadImages();
     });
   }
@@ -74,7 +77,7 @@ export class ImagesComponent implements OnInit {
 
 
   loadImages(): void {
-    this.imageService.getImages(this.tags, this.orderBy, this.page, this.pageSize).subscribe({
+    this.imageService.getImages(this.tags, this.orderBy, this.page, this.pageSize, this.fanImages).subscribe({
         next: (data) => {
           this.images = data.images;
           this.total = data.total;
@@ -122,7 +125,6 @@ export class ImagesComponent implements OnInit {
   }
 
   @HostListener('window:keyup.control.arrowLeft', ['$event'])
-
   prevPage() {
 
     if (this.page > 0) {
