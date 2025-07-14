@@ -6,11 +6,44 @@
   </p>
   <div class="col-md-auto col-auto">
     <div class="d-flex align-items-end me-md-2">
-      <div class="btn-group" btnRadioGroup [(ngModel)]="currentTheme">
-        <label class="btn btn-dark" [btnRadio]="0">System</label>
-        <label class="btn btn-dark" [btnRadio]="1">Dark</label>
-        <label class="btn btn-dark me-md-2" [btnRadio]="2">Light</label>
+      <!-- Use role="group" for better accessibility -->
+      <div class="btn-group" role="group" aria-label="Theme selector">
+
+        <!-- SYSTEM OPTION -->
+        <!-- 1. The hidden radio input that holds the state -->
+        <input type="radio"
+               class="btn-check"
+               name="theme-options"
+               id="theme-system"
+               autocomplete="off"
+               [value]="ThemeSettings.system"
+               [(ngModel)]="currentTheme">
+        <!-- 2. The visible label styled as a button -->
+        <label class="btn btn-dark" for="theme-system">System</label>
+
+
+        <!-- DARK OPTION -->
+        <input type="radio"
+               class="btn-check"
+               name="theme-options"
+               id="theme-dark"
+               autocomplete="off"
+               [value]="ThemeSettings.dark"
+               [(ngModel)]="currentTheme">
+        <label class="btn btn-dark" for="theme-dark">Dark</label>
+
+
+        <!-- LIGHT OPTION -->
+        <input type="radio"
+               class="btn-check"
+               name="theme-options"
+               id="theme-light"
+               autocomplete="off"
+               [value]="ThemeSettings.light"
+               [(ngModel)]="currentTheme">
+        <label class="btn btn-dark me-md-2" for="theme-light">Light</label>
+
       </div>
-    </div>
+  </div>
   </div>
 </footer>

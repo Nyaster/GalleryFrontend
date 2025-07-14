@@ -1,33 +1,42 @@
 <div class="container-fluid mt-5 min-vh-75">
   <div class="row justify-content-center">
     <div class="col-xs-auto">
-      @defer (when total > 2) {
-        <pagination
-          class="justify-content-center pagination-sm" [boundaryLinks]="true" [(ngModel)]="page" [maxSize]="5"
-          [totalItems]="total" [itemsPerPage]="pageSize"
-          (pageChanged)="changePage($event)" previousText="<" nextText=">" firstText="<<" lastText=">>"></pagination>
+      @defer (when total > 1) {
+        <div class="justify-content-center d-flex">
+          <ngb-pagination
+            [boundaryLinks]="true" [(page)]="page" [maxSize]="5"
+            [collectionSize]="total"
+            [pageSize]="pageSize"
+            [ellipses]="false"
+            (pageChange)="changePage($event)"></ngb-pagination>
+        </div>
       }
 
     </div>
 
   </div>
 
-    <app-search (search)="searchButton()" class="row" [tagsFromAbove]="tags" (keydown.shift.enter)="searchButton()"
-                (tagsChange)="onTagsChange($event)"></app-search>
+  <app-search (search)="searchButton()" class="row" [tagsFromAbove]="tags" (keydown.shift.enter)="searchButton()"
+              (tagsChange)="onTagsChange($event)"></app-search>
 
   <br>
   <ngx-masonry [options]="optionsMasonry" [ordered]="true" class="row overflow-hidden">
     @for (image of images; track image.id) {
-      <app-image-card (imageLoaded)="onImageLoad()"  [image]="image" ></app-image-card>
+      <app-image-card (imageLoaded)="onImageLoad()" [image]="image"></app-image-card>
 
     }
   </ngx-masonry>
   <br>
-<div class="row end-100">
-  @defer (when total > 2) {
-    <pagination
-      class="justify-content-center pagination-sm" [boundaryLinks]="true" [(ngModel)]="page" [maxSize]="5"
-      [totalItems]="total" [itemsPerPage]="pageSize" previousText="<" nextText=">" firstText="<<" lastText=">>"></pagination>
-  }
-</div>
+  <div class="row end-100">
+    @defer (when total > 2) {
+      <div class="justify-content-center d-flex">
+        <ngb-pagination
+          class="justify-content-center pagination-sm" [boundaryLinks]="true" [page]="page" [maxSize]="5"
+          [collectionSize]="total"
+          [pageSize]="pageSize"
+          [ellipses]="false"
+          (pageChange)="changePage($event)"></ngb-pagination>
+      </div>
+    }
+  </div>
 </div>

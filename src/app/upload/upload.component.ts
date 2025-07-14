@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
-import {TagifyModule, TagifyService} from "ngx-tagify";
 import {environment} from "../../environments/environment";
 import {Tag} from "../images/search/search.component";
 import {BehaviorSubject, debounceTime, distinctUntilChanged, Subject} from "rxjs";
@@ -10,7 +9,6 @@ import {BehaviorSubject, debounceTime, distinctUntilChanged, Subject} from "rxjs
     selector: 'app-upload',
     imports: [
         FormsModule,
-        TagifyModule
     ],
     templateUrl: './upload.component.html',
     styleUrl: './upload.component.scss'
@@ -36,7 +34,7 @@ export class UploadComponent implements OnInit {
     }// Allow custom tags
   };
 
-  constructor(private http: HttpClient, private tagifyService: TagifyService) {
+  constructor(private http: HttpClient) {
     this.apiImagesEndpoint = environment.apiUrl + '/api/images/'
   }
 
@@ -64,7 +62,7 @@ export class UploadComponent implements OnInit {
     this.http.get<Tag[]>(environment.apiUrl + `/api/tags/suggestions?tag=${$event}`)
       .subscribe(suggestions => {
         this.whitelist$.next(suggestions.map(x => x.name));
-        this.tagifyService.get("upload").dropdown.show();
+        //this.tagifyService.get("upload").dropdown.show();
       })
   }
 
