@@ -31,7 +31,7 @@
     @defer (when total > 2) {
       <div class="justify-content-center d-flex">
         <ngb-pagination
-          class="justify-content-center pagination-sm" [boundaryLinks]="true" [page]="page" [maxSize]="5"
+          [boundaryLinks]="true" [(page)]="page" [maxSize]="5"
           [collectionSize]="total"
           [pageSize]="pageSize"
           [ellipses]="false"
