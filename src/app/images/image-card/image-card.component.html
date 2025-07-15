@@ -1,6 +1,6 @@
 <div ngxMasonryItem class="col-sm-6 col-md-3">
   <div class="card">
-    <a routerLink="/images/{{image().id}}">
+    <a routerLink="/{{url}}/{{image().id}}">
       <img
         [src]="(environment.apiUrl+'/'+image().urlToImage+'/content?asJpeg=true' | authImage:image().width:image().height | async )"
         width="{{image().width}}"

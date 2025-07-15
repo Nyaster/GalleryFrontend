@@ -1,16 +1,15 @@
 import {Component, input, output} from '@angular/core';
-import {AsyncPipe, NgOptimizedImage} from "@angular/common";
+import {AsyncPipe} from "@angular/common";
 import {NgxMasonryModule} from "ngx-masonry";
-import {RouterLink} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {AuthImagePipe} from "../../auth-image.pipe";
 import {environment} from "../../../environments/environment";
-import {ImageTempGeneratorService} from "../image-temp-generator.service";
 import {AppImageDto} from "../image.service";
 
 @Component({
     selector: 'app-image-card',
     imports: [
-        NgOptimizedImage,
+
         NgxMasonryModule,
         RouterLink,
         AuthImagePipe,
@@ -22,9 +21,12 @@ import {AppImageDto} from "../image.service";
 export class ImageCardComponent {
   readonly image = input.required<AppImageDto>();
   readonly imageLoaded = output();
+  public url!: string;
 
-  constructor() {
-
+  constructor(activeRoute: ActivatedRoute) {
+    activeRoute.url.subscribe(url => {
+      this.url = url[0].path;
+    })
   }
   protected readonly environment = environment;
 }

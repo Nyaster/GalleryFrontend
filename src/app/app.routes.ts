@@ -19,7 +19,7 @@ export const routes: Routes = [
     path: "images", component: ImagesComponent, canActivate: [AuthGuardService]
   },{
     path: "fan-images", component: ImagesComponent, canActivate: [AuthGuardService]
-  },
+  },{path: "fan-images/:id", component: ImagePageComponent},
   {path: "images/:id", component: ImagePageComponent},
   {
     path: "home", component: HomeComponent,

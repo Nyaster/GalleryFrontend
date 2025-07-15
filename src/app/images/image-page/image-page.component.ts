@@ -1,6 +1,6 @@
 import {Component, input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {AsyncPipe, DatePipe, NgOptimizedImage} from "@angular/common";
+import {AsyncPipe, DatePipe} from "@angular/common";
 import {AppImageDto, ImageService} from "../image.service";
 import {AuthImagePipe} from "../../auth-image.pipe";
 import {environment} from "../../../environments/environment";
@@ -20,6 +20,7 @@ export class ImagePageComponent implements OnInit {
   id!: number | null;
   currentImageFromAbove = input<AppImageDto>();
   currentImage!: AppImageDto;
+  public url!: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private imageService: ImageService) {
     this.route.paramMap.subscribe(params => {
@@ -34,6 +35,9 @@ export class ImagePageComponent implements OnInit {
       }
 
     })
+    route.url.subscribe(url => {
+      this.url = url[0].path;
+    });
   }
 
   ngOnInit(): void {
