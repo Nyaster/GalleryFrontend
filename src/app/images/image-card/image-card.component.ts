@@ -26,6 +26,7 @@ export class ImageCardComponent {
   constructor(activeRoute: ActivatedRoute) {
     activeRoute.url.subscribe(url => {
       this.url = url[0].path;
+      console.log(this.url);
     })
   }
   protected readonly environment = environment;
