@@ -17,13 +17,12 @@ export class ImageTempGeneratorService {
       return this.cache.get(key)!;
     }
     const canvas = document.createElement('canvas');
-    canvas.width = width/3;
-    canvas.height = height/3;
+    canvas.width = width;
+    canvas.height = height;
     const context = canvas.getContext('2d');
     if (context) {
       context.fillStyle = '#ddd';
       context.fillRect(0, 0, width, height);
-      // Text color and styling
       context.fillStyle = '#000';
       context.font = '5rem Arial';
       context.textAlign = 'center';

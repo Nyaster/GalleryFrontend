@@ -3,17 +3,54 @@
     <form (ngSubmit)="authorization()">
       <h1 class="h3 mb-3 fw-normal text-center">Account Creation</h1>
       <div class="form-floating">
-        <input type="text" class="form-control" id="LoginInput" [formControl]="login">
+        <input type="text" class="form-control" name="login" id="LoginInput" [formControl]="login">
         <label for="LoginInput">Login</label>
+        @if (login.invalid && (login.touched || login.touched)) {
+
+            @if (login.hasError('required')) {
+              <div class="alert alert-danger">
+              <p>Login field is required</p>
+              </div>
+            }
+          @if (login.hasError('minlength')) {
+            <div class="alert alert-danger">
+              <p>Login must be 4 letters or more</p>
+            </div>
+          }
+          @if (login.hasError('maxlength')) {
+            <div class="alert alert-danger">
+              <p>Login doesn't contain than 15 letters</p>
+            </div>
+          }
+          @if (login.hasError('pattern')) {
+            <div class="alert alert-danger">
+              <p>Login may only contain letters from A to Z, and numbers</p>
+            </div>}
+        }
       </div>
       <div class="form-floating">
 
         <input type="password" class="form-control" id="PasswordInput" [formControl]="password">
         <label for="PasswordInput">Password</label>
-        @if (errorMessage) {
-          <p>Something wrong happened on my site, try again or try harder password (Min length 8)</p>
-        }
+        @if (password.invalid && (password.touched || password.touched)) {
+
+          @if (password.hasError('required')) {
+            <div class="alert alert-danger">
+              <p>Password field is required</p>
+            </div>
+          }
+          @if (password.hasError('minlength')) {
+            <div class="alert alert-danger">
+              <p>Password length must be 8 or more characters</p>
+            </div>
+          }}
+
       </div>
+      @if (errorMessage){
+        <div class="alert alert-danger">
+          <p>This login is already exist, try another</p>
+        </div>
+      }
       <button class="btn btn-primary w-100 py-2" type="submit">Registration</button>
     </form>
   </main>
