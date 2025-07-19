@@ -1,9 +1,8 @@
 import {Component, HostListener, OnInit, viewChild} from '@angular/core';
 import {AppImageDto, ImageService} from "./image.service";
-import { DatePipe, Location, NgOptimizedImage, ViewportScroller } from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NgxMasonryComponent, NgxMasonryModule, NgxMasonryOptions} from "ngx-masonry";
-import {ActivatedRoute, Router, RouterLink, RouterOutlet} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {SearchComponent} from "./search/search.component";
 import {ImageCardComponent} from "./image-card/image-card.component";
 import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
@@ -11,13 +10,9 @@ import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 @Component({
     selector: 'app-images',
   imports: [
-    DatePipe,
-    NgOptimizedImage,
     FormsModule,
     NgxMasonryModule,
     SearchComponent,
-    RouterOutlet,
-    RouterLink,
     ImageCardComponent,
     NgbPagination
   ],
@@ -51,7 +46,7 @@ export class ImagesComponent implements OnInit {
     });
   }
 
-  changePage($event:number): void {
+  changePage(): void {
     this.updateQueryParams();
   }
 
