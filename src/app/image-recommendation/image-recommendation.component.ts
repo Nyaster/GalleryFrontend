@@ -27,7 +27,8 @@ export class ImageRecommendationComponent implements OnInit, OnChanges {
         this.Images = data;
       },
       error: (err) => console.error(err)
-    })
+    });
+    this.updateMasonryItems();
   }
   ngOnInit(): void {
     this.imageService.getImageRecommendation(this.id()).subscribe({
@@ -36,6 +37,10 @@ export class ImageRecommendationComponent implements OnInit, OnChanges {
       },
       error: (err) => console.error(err)
     })
+    this.updateMasonryItems();
+  }
+
+  private updateMasonryItems() {
     if (this.masonry()) {
       this.masonry().reloadItems();
       this.masonry().layout();
