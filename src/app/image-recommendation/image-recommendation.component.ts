@@ -13,20 +13,15 @@ import {NgxMasonryComponent, NgxMasonryModule, NgxMasonryOptions} from "ngx-maso
   templateUrl: './image-recommendation.component.html',
   styleUrl: './image-recommendation.component.scss'
 })
-export class ImageRecommendationComponent implements OnInit, OnChanges, AfterViewInit {
+export class ImageRecommendationComponent implements OnInit, OnChanges{
   public Images!: AppImageDto[];
   optionsMasonry: NgxMasonryOptions = {};
-  private isViewInitialized = false;
   id = input.required<number>();
   readonly masonry = viewChild.required(NgxMasonryComponent);
 
   public constructor(private imageService: ImageService) {
   }
 
-  ngAfterViewInit(): void {
-        this.isViewInitialized = true;
-        this.updateMasonryItems();
-    }
   ngOnChanges() {
     this.imageService.getImageRecommendation(this.id()).subscribe({
       next: (data) => {
@@ -35,6 +30,7 @@ export class ImageRecommendationComponent implements OnInit, OnChanges, AfterVie
       },
       error: (err) => console.error(err),
     });
+    this.updateMasonryItems();
   }
   ngOnInit(): void {
     this.imageService.getImageRecommendation(this.id()).subscribe({
@@ -47,11 +43,10 @@ export class ImageRecommendationComponent implements OnInit, OnChanges, AfterVie
   }
 
   private updateMasonryItems() {
-    if(this.isViewInitialized && this.masonry()){
-      setTimeout(() => {
-        this.masonry().reloadItems();
-        this.masonry().layout();
-      },0)
-    }
+    setTimeout(() => {
+      this.masonry().reloadItems();
+      this.masonry().layout();
+    },100);
+
   }
 }
