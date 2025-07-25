@@ -1,4 +1,4 @@
-import {Component, input, OnChanges, OnInit, viewChild} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, input, OnChanges, OnInit, viewChild} from '@angular/core';
 import {AppImageDto, ImageService, PageableImageDto} from "../images/image.service";
 import {ActivatedRoute} from "@angular/router";
 import {ImageCardComponent} from "../images/image-card/image-card.component";
@@ -26,9 +26,11 @@ export class ImageRecommendationComponent implements OnInit, OnChanges {
       next: (data) => {
         this.Images = data;
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error(err),
+      complete: () => {
+        this.updateMasonryItems();
+      }
     });
-    this.updateMasonryItems();
   }
   ngOnInit(): void {
     this.imageService.getImageRecommendation(this.id()).subscribe({
