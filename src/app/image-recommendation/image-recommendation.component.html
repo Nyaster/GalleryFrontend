@@ -1,6 +1,6 @@
 <h5>Similar Images</h5>
 <ngx-masonry [options]="optionsMasonry" [ordered]="true" class="">
   @for (imageItem of Images; track $index) {
-    <app-image-card [image]="imageItem"></app-image-card>
+    <app-image-card (imageLoaded)="updateMasonryItems()" [image]="imageItem"></app-image-card>
   }
 </ngx-masonry>
