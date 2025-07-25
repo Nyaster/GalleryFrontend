@@ -13,7 +13,7 @@ export interface AppImageDto {
   tags: string[];
 }
 
-interface PageableImageDto {
+export interface PageableImageDto {
   page: number;
   pageSize: number;
   orderBy: string;
@@ -49,6 +49,9 @@ export class ImageService {
 
   getImageInfo(id: number): Observable<AppImageDto> {
     return this.http.get<AppImageDto>(this.apiImagesEndpoint + id);
+  }
+  getImageRecommendation(id:number):Observable<AppImageDto[]>{
+      return this.http.get<AppImageDto[]>(this.apiImagesEndpoint + id + '/recommendation');
   }
 
 }

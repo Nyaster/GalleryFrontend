@@ -4,20 +4,22 @@ import {AsyncPipe, DatePipe} from "@angular/common";
 import {AppImageDto, ImageService} from "../image.service";
 import {AuthImagePipe} from "../../auth-image.pipe";
 import {environment} from "../../../environments/environment";
+import {ImageRecommendationComponent} from "../../image-recommendation/image-recommendation.component";
 
 @Component({
-  selector: 'app-image-page',
   imports: [
     RouterLink,
     AuthImagePipe,
     AsyncPipe,
-    DatePipe
+    DatePipe,
+    ImageRecommendationComponent,
   ],
-  templateUrl: './image-page.component.html',
-  styleUrl: './image-page.component.scss'
+  selector: 'app-image-page',
+  styleUrl: './image-page.component.scss',
+  templateUrl: './image-page.component.html'
 })
 export class ImagePageComponent implements OnInit {
-  id!: number | null;
+  id!: number;
   currentImageFromAbove = input<AppImageDto>();
   currentImage!: AppImageDto;
   public url!: string;
