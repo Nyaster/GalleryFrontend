@@ -27,13 +27,14 @@ export class ImageRecommendationComponent implements OnInit, OnChanges{
   optionsMasonry: NgxMasonryOptions = {};
   id = input.required<number>();
   readonly masonry = viewChild.required(NgxMasonryComponent);
-
+  loadCounter : number = 0;
   public constructor(private imageService: ImageService) {
   }
 
   ngOnChanges(changes:SimpleChanges) {
     this.imageService.getImageRecommendation(this.id()).subscribe({
       next: (data) => {
+        this.loadCounter = 0;
         this.Images = [...data];
       },
       error: (err) => console.error(err),
@@ -47,7 +48,12 @@ export class ImageRecommendationComponent implements OnInit, OnChanges{
       error: (err) => console.error(err)
     })
   }
-
+  protected count(){
+    this.loadCounter++;
+    if (this.loadCounter >= 20){
+      this.updateMasonryItems();
+    }
+  }
   protected updateMasonryItems() {
     if(this.masonry()){
       this.masonry().reloadItems();
