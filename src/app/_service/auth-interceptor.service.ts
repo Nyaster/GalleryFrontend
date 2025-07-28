@@ -33,7 +33,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     return next.handle(req).pipe(
 
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401 && error.headers.get('token-expired') === 'true') {
+        if (error.status === 401 && (error.headers.get('token-expired') === 'true') || error.headers.has('token-expired')) {
           return this.handle401Error(req, next);
         }
         return throwError(() => error);
